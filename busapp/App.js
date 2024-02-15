@@ -1,9 +1,80 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, Button, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
+
+function RegisterScreen() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const register = () => {
+    fetch('http://127.0.0.1:8000/bus/register/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${username}&password=${password}`,
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => {
+          console.log('Response text:', text);  // log the response text
+          throw new Error(text);
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.error) {
+        Alert.alert('Error', data.error);
+      } else {
+        Alert.alert('Success', data.message);
+      }
+    })
+    .catch(error => Alert.alert('Error', error.toString()));
+  };
+
+  return (
+    <View>
+      <TextInput placeholder="Username" onChangeText={setUsername} />
+      <TextInput placeholder="Password" onChangeText={setPassword} secureTextEntry />
+      <Button title="Register" onPress={register} />
+    </View>
+  );
+}
+
+function LoginScreen() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = () => {
+    fetch('http://127.0.0.1:8000/bus/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${username}&password=${password}`,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        Alert.alert('Error', data.error);
+      } else {
+        Alert.alert('Success', data.message);
+      }
+    });
+  };
+
+  return (
+    <View>
+      <TextInput placeholder="Username" onChangeText={setUsername} />
+      <TextInput placeholder="Password" onChangeText={setPassword} secureTextEntry />
+      <Button title="Login" onPress={login} />
+    </View>
+  );
+}
 
 function HomeScreen({ navigation }) {
   return (
@@ -43,6 +114,8 @@ export default function App() {
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Link1" component={Link1Screen} />
         <Drawer.Screen name="Link2" component={Link2Screen} />
+        <Drawer.Screen name="Register" component={RegisterScreen} />
+        <Drawer.Screen name="Login" component={LoginScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

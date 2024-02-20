@@ -13,7 +13,6 @@ class Ticket(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=255)
-    transport = models.CharField(max_length=255)
 
 class City(models.Model):
     name = models.CharField(max_length=255)
@@ -24,10 +23,15 @@ class Route(models.Model):
     arrivals = models.ForeignKey(City, on_delete=models.CASCADE, related_name='arrival_routes')
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='routes')
 
+class Transport(models.Model):
+    type = models.CharField(max_length=255)
+    seats = models.IntegerField()
+
 class Trip(models.Model):
     departure = models.ForeignKey(Route, on_delete=models.CASCADE, related_name='departure_trips')
     arrival = models.ForeignKey(Route, on_delete=models.CASCADE, related_name='arrival_trips')
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='trips')
+    transport = models.ForeignKey(Transport, on_delete=models.CASCADE, related_name='trips')
 
 class UserTicket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

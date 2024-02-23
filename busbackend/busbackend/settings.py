@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'adminsortable2',
     'corsheaders',
     'bus',
     'django.contrib.admin',

@@ -3,9 +3,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.shortcuts import render
 
 @csrf_exempt
-def register(request):
+def register_api(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -24,3 +25,6 @@ def login_view(request):
             return JsonResponse({'error': 'Invalid username or password.'}, status=400)
         login(request, user)
         return JsonResponse({'message': 'Logged in successfully.'}, status=200)
+    
+def register(request):
+    return render(request, 'bus/signup.html')

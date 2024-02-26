@@ -1,5 +1,3 @@
-{% load static %}
-{% load socialaccount %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,16 +8,16 @@
 <link rel="icon" type="image/png" href="img/logo.png">
 <title>OsahanBus - Bus Booking HTML Mobile Template</title>
 
-<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<link href="{% static 'vendor/icons/icofont.min.css' %}" rel="stylesheet" type="text/css">
+<link href="vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" href="{% static 'vendor/slick/slick.min.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'vendor/slick/slick-theme.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="vendor/slick/slick.min.css" />
+<link rel="stylesheet" type="text/css" href="vendor/slick/slick-theme.min.css" />
 
-<link href="{% static 'css/custom.css' %}" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
 
-<link href="{% static 'vendor/sidebar/demo.css' %}" rel="stylesheet">
+<link href="vendor/sidebar/demo.css" rel="stylesheet">
 </head>
 <body>
 
@@ -27,14 +25,18 @@
 <div class="osahan-header-nav shadow-sm p-3 d-flex align-items-center bg-danger">
 <h5 class="font-weight-normal mb-0 text-white">
 <a class="text-danger mr-3" href="get-started.html"><i class="icofont-rounded-left"></i></a>
-Create an account
+Sign in to your account
 </h5>
 <div class="ml-auto d-flex align-items-center">
-<a class="toggle osahan-toggle h4 m-0 text-white ml-auto" href="#"><i class="icofont-navigation-menu"></i></a>
+<a class="toggle osahan-toggle h4 m-0 text-white ml-auto" href="signin.html#"><i class="icofont-navigation-menu"></i></a>
 </div>
 </div>
-<div class="p-3">
+<div class="px-3 pt-3 pb-5">
 <form action="verification.html">
+<div class="form-group">
+<label class="text-muted f-10 mb-1">Mobile Number</label>
+<input type="number" class="form-control" placeholder="Enter Mobile Number" value="1234567890">
+</div>
 <div class="form-group">
 <label class="text-muted f-10 mb-1">Your Email</label>
 <input type="email" class="form-control" placeholder="Enter Your Email" value="example@mail.com">
@@ -43,31 +45,32 @@ Create an account
 <label class="text-muted f-10 mb-1">Password</label>
 <input type="password" class="form-control" placeholder="Enter Your Password" value="osahan94">
 </div>
-<div class="form-group">
-<label class="text-muted f-10 mb-1">Confirm Password</label>
-<input type="password" class="form-control" placeholder="Enter Your Password" value="osahan94">
+<div class="text-right mb-3">
+<a href="change-password.html" class="text-muted small">Forgot your password?</a>
 </div>
-<button type="submit" class="btn btn-danger btn-block osahanbus-btn mb-3 rounded-1 mt-4">CREATE AN ACCOUNT</button>
-<p class="text-muted text-center small">By signing up you agree to our Privacy Policy and Terms.</p>
+<button type="submit" class="btn btn-danger btn-block osahanbus-btn mb-4 rounded-1">SIGN IN</button>
 </form>
 <div class="sign-or d-flex align-items-center justify-content-center mb-4">
 <hr class="mr-4">
 <p class="text-muted text-center py-2 m-0">OR</p>
 <hr class="ml-4">
 </div>
-<a href="{% provider_login_url 'google' %}" class="btn btn-block rounded-1 google-btn osahanbus-social">
+<a href="verification.html" class="btn btn-block rounded-1 google-btn osahanbus-social">
 <i class="icofont-google-plus"></i> LOGIN WITH GOOGLE
 </a>
 <a href="verification.html" class="my-3 btn btn-block rounded-1 fb-btn osahanbus-social">
 <i class="icofont-facebook"></i> LOGIN WITH FACEBOOK
 </a>
+<div class="osahan-signin text-center p-1">
+<p class="m-0">Not a member ? <a href="signup.html" class="text-danger ml-2">Sign Up</a></p>
+</div>
 </div>
 </div>
 
 <nav id="main-nav">
 <ul class="second-nav">
 <li>
-<a href="signup.html#" class="bg-danger sidebar-user d-flex align-items-center py-4 px-3 border-0 mb-0">
+<a href="signin.html#" class="bg-danger sidebar-user d-flex align-items-center py-4 px-3 border-0 mb-0">
 <img src="img/user1.jpg" class="img-fluid rounded-pill mr-3">
 <div class="text-white">
 <h6 class="mb-0">I Am Osahan</h6>
@@ -86,7 +89,7 @@ Create an account
 <a href="get-started.html"><i class="icofont-ui-play mr-2"></i> Get Started</a>
 </li>
 <li>
-<a href="signup.html#"><i class="icofont-key mr-2"></i> Authentication</a>
+<a href="signin.html#"><i class="icofont-key mr-2"></i> Authentication</a>
 <ul>
 <li><a href="signin.html">Sign In</a></li>
 <li><a href="signup.html">Sign Up</a></li>
@@ -102,7 +105,7 @@ Create an account
 <li><a href="payment.html"><i class="icofont-id-card mr-2"></i> Checkout</a></li>
 <li><a href="payment-card.html"><i class="icofont-ui-v-card mr-2"></i> Payment</a></li>
 <li>
-<a href="signup.html#"><i class="icofont-user-alt-3 mr-2"></i> Profile Pages</a>
+<a href="signin.html#"><i class="icofont-user-alt-3 mr-2"></i> Profile Pages</a>
 <ul>
 <li><a href="profile.html"> Profile</a></li>
 <li><a href="your-ticket.html"> Your Ticket</a></li>
@@ -111,7 +114,7 @@ Create an account
 </ul>
 </li>
 <li>
-<a href="signup.html#"><i class="icofont-page mr-2"></i> Extra Pages</a>
+<a href="signin.html#"><i class="icofont-page mr-2"></i> Extra Pages</a>
 <ul>
 <li><a href="support.html">Support</a></li>
 <li><a href="notification.html">Notification</a></li>
@@ -120,35 +123,35 @@ Create an account
 </ul>
 </li>
 <li>
-<a href="signup.html#"><i class="icofont-link mr-2"></i> Navigation Link Example</a>
+<a href="signin.html#"><i class="icofont-link mr-2"></i> Navigation Link Example</a>
 <ul>
 <li>
-<a href="signup.html#">Link Example 1</a>
+<a href="signin.html#">Link Example 1</a>
 <ul>
 <li>
-<a href="signup.html#">Link Example 1.1</a>
+<a href="signin.html#">Link Example 1.1</a>
 <ul>
-<li><a href="signup.html#">Link</a></li>
-<li><a href="signup.html#">Link</a></li>
-<li><a href="signup.html#">Link</a></li>
-<li><a href="signup.html#">Link</a></li>
-<li><a href="signup.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
 </ul>
 </li>
 <li>
-<a href="signup.html#">Link Example 1.2</a>
+<a href="signin.html#">Link Example 1.2</a>
 <ul>
-<li><a href="signup.html#">Link</a></li>
-<li><a href="signup.html#">Link</a></li>
-<li><a href="signup.html#">Link</a></li>
-<li><a href="signup.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
+<li><a href="signin.html#">Link</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="signup.html#">Link Example 2</a></li>
-<li><a href="signup.html#">Link Example 3</a></li>
-<li><a href="signup.html#">Link Example 4</a></li>
+<li><a href="signin.html#">Link Example 2</a></li>
+<li><a href="signin.html#">Link Example 3</a></li>
+<li><a href="signin.html#">Link Example 4</a></li>
 <li data-nav-custom-content>
 <div class="custom-message">
 You can add any custom content to your navigation items. This text is just an example.
@@ -179,14 +182,14 @@ Help
 </ul>
 </nav>
 
-<script src="{% static 'vendor/jquery/jquery.min.js' %}" type="6a989ceeae2e39946fb077b2-text/javascript"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}" type="6a989ceeae2e39946fb077b2-text/javascript"></script>
+<script src="vendor/jquery/jquery.min.js" type="14094db2bba93186cb086735-text/javascript"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js" type="14094db2bba93186cb086735-text/javascript"></script>
 
-<script type="6a989ceeae2e39946fb077b2-text/javascript" src="{% static 'vendor/slick/slick.min.js' %}"></script>
+<script type="14094db2bba93186cb086735-text/javascript" src="vendor/slick/slick.min.js"></script>
 
-<script type="6a989ceeae2e39946fb077b2-text/javascript" src="{% static 'vendor/sidebar/hc-offcanvas-nav.js' %}"></script>
+<script type="14094db2bba93186cb086735-text/javascript" src="vendor/sidebar/hc-offcanvas-nav.js"></script>
 
-<script src="{% static 'js/custom.js' %}" type="6a989ceeae2e39946fb077b2-text/javascript"></script>
-<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="6a989ceeae2e39946fb077b2-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317" integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA==" data-cf-beacon='{"rayId":"83c3eef8dade317c","version":"2023.10.0","r":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}' crossorigin="anonymous"></script>
+<script src="js/custom.js" type="14094db2bba93186cb086735-text/javascript"></script>
+<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="14094db2bba93186cb086735-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317" integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA==" data-cf-beacon='{"rayId":"83c3eefbdeda317c","version":"2023.10.0","r":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}' crossorigin="anonymous"></script>
 </body>
 </html>

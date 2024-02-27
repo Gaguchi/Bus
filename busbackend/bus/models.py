@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from string import ascii_uppercase
 
 class User(models.Model):
     name = models.CharField(max_length=255)
@@ -10,12 +11,13 @@ class User(models.Model):
     trips = models.ManyToManyField('Trip', through='Ticket', related_name='users')
 
 class Ticket(models.Model):
+    seat = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
 
 class Transport(models.Model):
     type = models.CharField(max_length=255)
-    seats = models.IntegerField()
+    columns = models.IntegerField()
     rows = models.IntegerField()
 
 class Company(models.Model):
@@ -61,3 +63,13 @@ class Trip(models.Model):
     route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name='trips')
     transport = models.ForeignKey(Transport, on_delete=models.CASCADE, related_name='trips')
     time = models.DateTimeField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        is_new = not self.pk  # check if this is a new instance
+        super().save(*args, **kwargs)  # call the original save method
+
+        if is_new:  # if this is a new instance
+            for row in range(1, self.transport.rows + 1):
+                for col in ascii_uppercase[:self.transport.columns]:
+                    seat = f"{row}{col}"
+                    Ticket.objects.create(seat=seat, trip=self)

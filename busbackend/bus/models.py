@@ -10,21 +10,33 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     trips = models.ManyToManyField('Trip', through='Ticket', related_name='users')
 
+    def __str__(self):
+        return str(self.name)
+
 class Ticket(models.Model):
     seat = models.CharField(max_length=255)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     trip = models.ForeignKey('Trip', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.seat} - {self.trip}"
 
 class Transport(models.Model):
     type = models.CharField(max_length=255)
     columns = models.IntegerField()
     rows = models.IntegerField()
+    
+    def __str__(self):
+        return f"{self.type} - {self.rows}/{self.columns}"
 
 class Company(models.Model):
     name = models.CharField(max_length=255)
     routes = models.ManyToManyField('Route', related_name='companies', blank=True)
     transport = models.ForeignKey(Transport, on_delete=models.SET_NULL, null=True)
     trips = models.ManyToManyField('Trip', related_name='companies', blank=True)
+
+    def __str__(self):
+        return str(self.name)
 
 class City(models.Model):
     name = models.CharField(max_length=255)
@@ -63,6 +75,9 @@ class Trip(models.Model):
     route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name='trips')
     transport = models.ForeignKey(Transport, on_delete=models.CASCADE, related_name='trips')
     time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.route} - {self.time}"
 
     def save(self, *args, **kwargs):
         is_new = not self.pk  # check if this is a new instance

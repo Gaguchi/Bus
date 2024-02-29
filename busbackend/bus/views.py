@@ -28,3 +28,6 @@ from django.shortcuts import render
     
 def register(request):
     return render(request, 'bus/signup.html')
+
+def login(request):
+    return render(request, 'bus/signin.html')

@@ -1,0 +1,29 @@
+{% extends "bus/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">{% trans "Sign In" %}</div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+                    </form>
+                </div>
+            </div>
+            <p class="text-center">
+                <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a> |
+                <a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

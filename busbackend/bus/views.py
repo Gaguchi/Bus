@@ -31,3 +31,6 @@ def register(request):
 
 def login(request):
     return render(request, 'bus/signin.html')
+
+def index(request):
+    return render(request, 'bus/home.html')

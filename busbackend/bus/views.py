@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
+from .models import *
 
 # @csrf_exempt
 # def register_api(request):
@@ -33,4 +34,18 @@ def login(request):
     return render(request, 'bus/signin.html')
 
 def index(request):
-    return render(request, 'bus/home.html')
+    cities = City.objects.all()
+    return render(request, 'home.html', {'cities': cities})
+
+def listings(request):
+    if request.method == 'POST':
+        from_city_id = request.POST['from_city']
+        to_city_id = request.POST['to_city']
+        date = request.POST['date']
+
+        from_city = City.objects.get(id=from_city_id)
+        to_city = City.objects.get(id=to_city_id)
+
+        trips = Trip.objects.filter(from_city=from_city, to_city=to_city, date=date)
+
+        return render(request, 'listings.html', {'trips': trips})

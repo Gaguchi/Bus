@@ -39,13 +39,15 @@ def index(request):
 
 def listings(request):
     if request.method == 'POST':
-        from_city_id = request.POST['from_city']
-        to_city_id = request.POST['to_city']
-        date = request.POST['date']
+        from_city_name = request.POST['from_city']
+        to_city_name = request.POST['to_city']
+        date = datetime.strptime(request.POST['date'], "%Y-%m-%d").date()
 
-        from_city = City.objects.get(id=from_city_id)
-        to_city = City.objects.get(id=to_city_id)
+        from_city = City.objects.get(name=from_city_name)
+        to_city = City.objects.get(name=to_city_name)
 
-        trips = Trip.objects.filter(from_city=from_city, to_city=to_city, date=date)
+        routes = Route.objects.filter(stops__city=from_city).filter(stops__city=to_city)
 
-        return render(request, 'bus/listings.html', {'trips': trips})
+        trips = Trip.objects.filter(route__in=routes, time__date=date)
+
+        return render(request, 'bus/listing.html', {'trips': trips})

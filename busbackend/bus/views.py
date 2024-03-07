@@ -35,7 +35,7 @@ def login(request):
 
 def index(request):
     cities = City.objects.all()
-    return render(request, 'home.html', {'cities': cities})
+    return render(request, 'bus/home.html', {'cities': cities})
 
 def listings(request):
     if request.method == 'POST':
@@ -48,4 +48,4 @@ def listings(request):
 
         trips = Trip.objects.filter(from_city=from_city, to_city=to_city, date=date)
 
-        return render(request, 'listings.html', {'trips': trips})
+        return render(request, 'bus/listings.html', {'trips': trips})

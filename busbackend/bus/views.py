@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from .models import *
 
 # @csrf_exempt
@@ -51,3 +52,7 @@ def listings(request):
         trips = Trip.objects.filter(route__in=routes, time__date=date)
 
         return render(request, 'bus/listing.html', {'trips': trips})
+    
+def trip_details(request, trip_id):
+    trip = get_object_or_404(Trip, pk=trip_id)
+    return render(request, 'bus/bus-details.html', {'trip': trip})

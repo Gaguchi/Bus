@@ -1,5 +1,6 @@
 {% extends "bus/base.html" %}
 {% block content %}
+{% load static %}
 
 <body class="bg-light">
 
@@ -36,7 +37,7 @@
                     <div class="list_item_gird m-0 bg-white shadow-sm listing-item border-bottom border-right">
                         <div class="px-3 pt-3 tic-div">
                             <div class="list-item-img">
-                                <img src="img/listing/item1.png" class="img-fluid">
+                                <img src="{% static 'img/listing/item1.png'%}" class="img-fluid">
                             </div>
                             <p class="mb-0 l-hght-10">{{ trip.route.companies.first.name }}</p>
                             <span class="text-danger small">{{ trip.route.stops.first.city.name }} to {{ trip.route.stops.last.city.name }}</span>
@@ -73,6 +74,18 @@
                         </div>
                     </div>
                 </a>
+            {% empty %}
+            <div class="svh-100 osahan-coming-soon p-4 d-flex justify-content-center align-items-center">
+                <div class="osahan-text text-center">
+                <div class="osahan-img px-3 pb-1">
+                <img src="{% static 'img/not-found.svg'%}" class="img-fluid mb-1">
+                </div>
+                <h2 class="mb-3 font-weight-bold text-danger">Page not <b>found</b></h2>
+                <p class="lead small mb-0">Oops! Looks like you followed a bad link.</p>
+                <p class="mb-5">If you think this is a problem with us, please <a class="text-danger" href="support.html">tell us</a>.</p>
+                <a href="{% url 'index' %}" class="btn btn-danger px-5 osahanbus-btn rounded-1 mt-4">Go Back</a>
+                </div>
+                </div>
             {% endfor %}
         </div>
     </div>

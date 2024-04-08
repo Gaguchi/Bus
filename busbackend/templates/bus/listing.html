@@ -33,7 +33,7 @@
                 </div>
             </div>
             {% for trip in trips %}
-                <a href="bus-details.html" class="text-dark col-6 px-0">
+                <a href="{% url 'bus-details' trip.id %}" class="text-dark col-6 px-0">
                     <div class="list_item_gird m-0 bg-white shadow-sm listing-item border-bottom border-right">
                         <div class="px-3 pt-3 tic-div">
                             <div class="list-item-img">

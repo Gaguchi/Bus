@@ -1,24 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content>
-<meta name="author" content>
-<link rel="icon" type="image/png" href="img/logo.png">
-<title>OsahanBus - Bus Booking HTML Mobile Template</title>
+{% extends "bus/base.html" %}
+{% block content %}
+{% load static %}
 
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<link href="vendor/icons/icofont.min.css" rel="stylesheet" type="text/css">
-
-<link rel="stylesheet" type="text/css" href="vendor/slick/slick.min.css" />
-<link rel="stylesheet" type="text/css" href="vendor/slick/slick-theme.min.css" />
-
-<link href="css/custom.css" rel="stylesheet">
-
-<link href="vendor/sidebar/demo.css" rel="stylesheet">
-</head>
 <body class="bg-light">
 
 <div class="Bus-Details padding-bt">
@@ -45,7 +28,7 @@ Bus Details
 <i class="icofont-star text-muted"></i>
 <span class="text-dark">4.0</span>
 <div class="d-flex mt-2">
-<p class="m-0"><i class="icofont-google-map mr-1 text-danger"></i><span class="small">Dhaka to Bogura</span></p>
+<p class="m-0"><i class="icofont-google-map mr-1 text-danger"></i><span class="small">{{ trip.route.stops.first.city.name }} to {{ trip.route.stops.last.city.name }}</span></p>
 <p class="small ml-auto mb-0"><i class="icofont-bus mr-1 text-danger"></i> St. $5</p>
 </div>
 </div>
@@ -379,14 +362,4 @@ Help
 </ul>
 </nav>
 
-<script src="vendor/jquery/jquery.min.js" type="b9e6cc79872e744197bab3df-text/javascript"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js" type="b9e6cc79872e744197bab3df-text/javascript"></script>
-
-<script type="b9e6cc79872e744197bab3df-text/javascript" src="vendor/slick/slick.min.js"></script>
-
-<script type="b9e6cc79872e744197bab3df-text/javascript" src="vendor/sidebar/hc-offcanvas-nav.js"></script>
-
-<script src="js/custom.js" type="b9e6cc79872e744197bab3df-text/javascript"></script>
-<script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="b9e6cc79872e744197bab3df-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317" integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA==" data-cf-beacon='{"rayId":"83c3ef146af6317c","version":"2023.10.0","r":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}' crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}

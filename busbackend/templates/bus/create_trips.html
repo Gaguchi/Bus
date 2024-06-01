@@ -1,0 +1,43 @@
+{% extends "bus/base.html" %}
+{% block content %}
+{% load static %}
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="route">Route:</label>
+    <select id="route" name="route">
+        {% for route in routes %}
+            <option value="{{ route.id }}">{{ route }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="vehicle">Vehicle:</label>
+    <select id="vehicle" name="vehicle">
+        {% for vehicle in vehicles %}
+            <option value="{{ vehicle.id }}">{{ vehicle }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="dates">Dates:</label>
+    <div id="date-inputs">
+        <input type="date" name="dates[]" required>
+    </div>
+    <button type="button" id="add-date">Add another date</button>
+
+    <label for="times">Times:</label>
+    <input type="time" id="times" name="times" multiple>
+
+    <button type="submit">Create Trips</button>
+</form>
+
+<script>
+    document.getElementById('add-date').addEventListener('click', function() {
+        var input = document.createElement('input');
+        input.type = 'date';
+        input.name = 'dates[]';
+        input.required = true;
+        document.getElementById('date-inputs').appendChild(input);
+    });
+</script>
+
+{% endblock %}

@@ -58,9 +58,8 @@ class TransportVehicleAdmin(admin.ModelAdmin):
 
 @admin.register(Trip)
 class TripAdmin(admin.ModelAdmin):
-    list_display = ['route', 'transport_vehicle', 'time', 'interval']
-    list_filter = ['route', 'transport_vehicle', 'days_of_week']
-    filter_horizontal = ['days_of_week']
+    list_display = ['route', 'transport_vehicle', 'date', 'time']
+    list_filter = ['route', 'transport_vehicle', 'date']
 
 
 @admin.register(DayOfWeek)

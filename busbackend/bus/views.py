@@ -3,9 +3,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from .models import *
+from datetime import datetime
 
 # @csrf_exempt
 # def register_api(request):
@@ -56,3 +57,24 @@ def listings(request):
 def trip_details(request, trip_id):
     trip = get_object_or_404(Trip, pk=trip_id)
     return render(request, 'bus/bus-details.html', {'trip': trip})
+
+
+def create_trips(request):
+    if request.method == 'POST':
+        route_id = request.POST['route']
+        vehicle_id = request.POST['vehicle']
+        dates = request.POST.getlist('dates[]')
+
+        route = Route.objects.get(pk=route_id)
+        vehicle = TransportVehicle.objects.get(pk=vehicle_id)
+
+        for date_str in dates:
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            time = datetime.strptime('00:00:00', "%H:%M:%S").time()  # default time
+            Trip.objects.create(route=route, transport_vehicle=vehicle, date=date, time=time)
+
+        return redirect('bus:index')
+
+    routes = Route.objects.all()
+    vehicles = TransportVehicle.objects.all()
+    return render(request, 'bus/create_trips.html', {'routes': routes, 'vehicles': vehicles})

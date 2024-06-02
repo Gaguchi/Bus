@@ -73,7 +73,7 @@ def create_trips(request):
             time = datetime.strptime('00:00:00', "%H:%M:%S").time()  # default time
             Trip.objects.create(route=route, transport_vehicle=vehicle, date=date, time=time)
 
-        return redirect('bus:index')
+        return redirect('index')
 
     routes = Route.objects.all()
     vehicles = TransportVehicle.objects.all()

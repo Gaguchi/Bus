@@ -58,7 +58,6 @@ def trip_details(request, trip_id):
     trip = get_object_or_404(Trip, pk=trip_id)
     return render(request, 'bus/bus-details.html', {'trip': trip})
 
-
 def create_trips(request):
     if request.method == 'POST':
         route_id = request.POST['route']
@@ -69,9 +68,10 @@ def create_trips(request):
         vehicle = TransportVehicle.objects.get(pk=vehicle_id)
 
         for date_str in dates:
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            time = datetime.strptime('00:00:00', "%H:%M:%S").time()  # default time
-            Trip.objects.create(route=route, transport_vehicle=vehicle, date=date, time=time)
+            if date_str:  # Skip empty dates
+                date = datetime.strptime(date_str, "%Y-%m-%d").date()
+                time = datetime.strptime('00:00:00', "%H:%M:%S").time()  # default time
+                Trip.objects.create(route=route, transport_vehicle=vehicle, date=date, time=time)
 
         return redirect('index')
 

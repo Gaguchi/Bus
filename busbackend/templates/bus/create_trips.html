@@ -32,11 +32,38 @@
         {% endfor %}
     </select>
 
-    <label for="dates">Dates:</label>
-    <div id="date-inputs">
-        <input type="date" name="dates[]" required>
+    <label for="date-selection-method">Date selection method:</label>
+    <div id="date-selection-method">
+        <input type="radio" id="individual-dates" name="date-selection-method" value="individual-dates" checked>
+        <label for="individual-dates">Individual dates</label>
+
+        <input type="radio" id="days-of-week" name="date-selection-method" value="days-of-week">
+        <label for="days-of-week">Days of the week</label>
     </div>
-    <button type="button" id="add-date">Add another date</button>
+
+    <div id="individual-dates-inputs">
+        <label for="dates">Dates:</label>
+        <div id="date-inputs">
+            <input type="date" name="dates[]" required>
+        </div>
+        <button type="button" id="add-date">Add another date</button>
+    </div>
+
+    <div id="days-of-week-inputs" style="display: none;">
+        <label for="days">Days:</label>
+        <select id="days" name="days[]" multiple required>
+            <option value="0">Monday</option>
+            <option value="1">Tuesday</option>
+            <option value="2">Wednesday</option>
+            <option value="3">Thursday</option>
+            <option value="4">Friday</option>
+            <option value="5">Saturday</option>
+            <option value="6">Sunday</option>
+        </select>
+
+        <label for="months">Months in advance:</label>
+        <input type="number" id="months" name="months" min="1" required>
+    </div>
 
     <label for="times">Times:</label>
     <input type="time" id="times" name="times" multiple>
@@ -82,6 +109,26 @@
         input.name = 'dates[]';
         input.required = true;
         document.getElementById('date-inputs').appendChild(input);
+    });
+
+    document.getElementById('date-selection-method').addEventListener('change', function() {
+        var method = document.querySelector('input[name="date-selection-method"]:checked').value;
+        var individualDatesInputs = document.getElementById('individual-dates-inputs');
+        var daysOfWeekInputs = document.getElementById('days-of-week-inputs');
+
+        if (method === 'individual-dates') {
+            individualDatesInputs.style.display = 'block';
+            Array.from(individualDatesInputs.querySelectorAll('input[name="dates[]"]')).forEach(function(input) {
+                input.required = true;
+            });
+            daysOfWeekInputs.style.display = 'none';
+        } else {
+            individualDatesInputs.style.display = 'none';
+            Array.from(individualDatesInputs.querySelectorAll('input[name="dates[]"]')).forEach(function(input) {
+                input.required = false;
+            });
+            daysOfWeekInputs.style.display = 'block';
+        }
     });
 </script>
 

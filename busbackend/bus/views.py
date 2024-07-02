@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+from dateutil.relativedelta import relativedelta
+from datetime import timedelta
 from .models import *
 from datetime import datetime
 
@@ -62,16 +64,32 @@ def create_trips(request):
     if request.method == 'POST':
         route_id = request.POST['route']
         vehicle_id = request.POST['vehicle']
-        dates = request.POST.getlist('dates[]')
+        date_selection_method = request.POST['date-selection-method']
 
         route = Route.objects.get(pk=route_id)
         vehicle = TransportVehicle.objects.get(pk=vehicle_id)
 
-        for date_str in dates:
-            if date_str:  # Skip empty dates
-                date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                time = datetime.strptime('00:00:00', "%H:%M:%S").time()  # default time
-                Trip.objects.create(route=route, transport_vehicle=vehicle, date=date, time=time)
+        if date_selection_method == 'individual-dates':
+            dates = request.POST.getlist('dates[]')
+
+            for date_str in dates:
+                if date_str:  # Skip empty dates
+                    date = datetime.strptime(date_str, "%Y-%m-%d").date()
+                    time = datetime.strptime('00:00:00', "%H:%M:%S").time()  # default time
+                    Trip.objects.create(route=route, transport_vehicle=vehicle, date=date, time=time)
+        elif date_selection_method == 'days-of-week':
+            days = request.POST.getlist('days[]')
+            months = int(request.POST['months'])
+
+            start_date = datetime.now().date()
+            end_date = start_date + relativedelta(months=months)
+
+            date = start_date
+            while date <= end_date:
+                if str(date.weekday()) in days:
+                    time = datetime.strptime('00:00:00', "%H:%M:%S").time()  # default time
+                    Trip.objects.create(route=route, transport_vehicle=vehicle, date=date, time=time)
+                date += timedelta(days=1)
 
         return redirect('index')
 

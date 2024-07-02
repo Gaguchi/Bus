@@ -66,9 +66,10 @@
     </div>
 
     <label for="times">Times:</label>
-    <input type="time" id="times" name="times" multiple>
-
-    <button type="submit">Create Trips</button>
+    <div id="time-inputs">
+        <input type="time" name="times[]" required>
+    </div>
+    <button type="button" id="add-time">Add another time</button>
 </form>
 </div>
 </div>
@@ -109,6 +110,14 @@
         input.name = 'dates[]';
         input.required = true;
         document.getElementById('date-inputs').appendChild(input);
+    });
+
+    document.getElementById('add-time').addEventListener('click', function() {
+        var input = document.createElement('input');
+        input.type = 'time';
+        input.name = 'times[]';
+        input.required = true;
+        document.getElementById('time-inputs').appendChild(input);
     });
 
     document.getElementById('date-selection-method').addEventListener('change', function() {
